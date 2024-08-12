@@ -10,6 +10,7 @@
  5. Swashbuckle.AspNetCore v6.7.0
  6. Microsoft.EntityFrameworkCore.SqlServer v8.0.7
  7. Microsoft.EntityFrameworkCore.Tools v8.0.7
+ 8. AutoMapper v13.0.1
 
  ### Create Domain Model  
  Follow the project structure and create the domain model and also do the migration to DB to create the tables.
@@ -27,4 +28,17 @@ To connect at your DB go to "./appsettings.json" and add the following data and 
     "UltiTourneyConnectionString": "Server={serverName};Database=UltiTourneyDb;Trusted_Connection=True;TrustServerCertificate=True"  
   }  
 
-### Create a GET EndPoint
+### Create Controller
+To create an EndPont to manipulate the domain models is necesary have a Controller. It contains all the domain's EndPoints.  
+  1. Go to "./Controllers" folder and add an API Controller empty.
+  2. The name allways contains the sufix "Controller". Example name: CountriesController.cs
+  3. The controller contains the IMapper and the model interface property.
+
+### Mapper
+To don't send the DB structure to the user, is necesary map the domain model to a DTO model with only the necesary information.  
+  1. In the folder "./Models/DTO/{Domain_name}" create your class with the only the necesary information for the user.
+  2. The file "./Mappings/AutoMapperProfiles.cs" contains all the mapping configuration.
+
+### Create EndPoint
+Once the controller is created, create your function doing your necesary actions using the interface and mapper.  
+Info: Go to "./Program.cs" and add the scoped service "builder.Services.AddScoped({interface}, {sql_repository})".  
