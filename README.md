@@ -32,12 +32,18 @@ To connect at your DB go to "./appsettings.json" and add the following data and 
 To create an EndPont to manipulate the domain models is necesary have a Controller. It contains all the domain's EndPoints.  
   1. Go to "./Controllers" folder and add an API Controller empty.
   2. The name allways contains the sufix "Controller". Example name: CountriesController.cs
-  3. The controller contains the IMapper and the model interface property.
+  3. The controller contains the IMapper and the model interface property.  
+Info: The controller allways contains an interface from the folder "./Repositories".
 
 ### Mapper
 To don't send the DB structure to the user, is necesary map the domain model to a DTO model with only the necesary information.  
   1. In the folder "./Models/DTO/{Domain_name}" create your class with the only the necesary information for the user.
   2. The file "./Mappings/AutoMapperProfiles.cs" contains all the mapping configuration.
+
+### Repositories folder  
+This folder contains two types of files:  
+ 1. An interface were exist all the header's functions.
+ 2. The SQL Repository contains the intererface and have all the logic from the functions.
 
 ### Create EndPoint
 Once the controller is created, create your function doing your necesary actions using the interface and mapper.  
