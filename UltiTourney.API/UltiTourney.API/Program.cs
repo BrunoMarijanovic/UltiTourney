@@ -19,6 +19,7 @@ builder.Services.AddDbContext<UltiTourneyDbContext>(
     );
 
 builder.Services.AddScoped<ICityRepository, SQLCityRepository>();
+builder.Services.AddScoped<ICountryRepository, SQLCountryRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
