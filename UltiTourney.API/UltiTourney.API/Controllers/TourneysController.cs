@@ -23,6 +23,30 @@ namespace UltiTourney.API.Controllers
         }
 
         /// <summary>
+        /// GET: /api/Tourney
+        /// </summary>
+        /// <param name="filterOn"></param>
+        /// <param name="filterQuery"></param>
+        /// <param name="sortBy"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="isAscending"></param>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetAll(string? filterOn = null, string? filterQuery = null,
+            string? sortBy = null, DateOnly? startDate = null, DateOnly? endDate = null,
+            bool isAscending = true, int pageNumber = 1, int pageSize = 10)
+        {
+            List<Tourney> tourneys = await tourneyRepository.GetAllAsync(filterOn, filterQuery,
+                sortBy, startDate, endDate, isAscending, pageNumber, pageSize);
+
+            // Map Domain Model to DTO
+            return Ok(mapper.Map<List<TourneyDto>>(tourneys));
+        }
+
+        /// <summary>
         /// POST: /api/Tourneys
         /// </summary>
         /// <param name="request"></param>
