@@ -2,6 +2,7 @@
 using UltiTourney.API.Models.Domain;
 using UltiTourney.API.Models.DTO.City;
 using UltiTourney.API.Models.DTO.Country;
+using UltiTourney.API.Models.DTO.Tourney;
 
 namespace UltiTourney.API.Mappings
 {
@@ -14,6 +15,10 @@ namespace UltiTourney.API.Mappings
 
             // Country mapping
             CreateMap<Country, CountryDto>().ReverseMap();
+
+            // Tourneys
+            CreateMap<TourneyUploadRequestDto, Tourney>().ReverseMap();
+            CreateMap<Tourney, TourneyDto>().ReverseMap();
         }
     }
 }

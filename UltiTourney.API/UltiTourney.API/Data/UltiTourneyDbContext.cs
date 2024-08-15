@@ -17,10 +17,23 @@ namespace UltiTourney.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // A city have a country and a country have many cities.
             modelBuilder.Entity<City>()
                 .HasOne(c => c.Country)
                 .WithMany(c => c.Cities)
                 .HasForeignKey(c => c.IdCountry);
+
+            // A toruney have only one city
+            modelBuilder.Entity<Tourney>()
+                .HasOne(t => t.City)
+                .WithMany()
+                .HasForeignKey(t => t.IdCity);
+
+            // A toruney have only one image
+            modelBuilder.Entity<Tourney>()
+                .HasOne(t => t.Image)
+                .WithMany()
+                .HasForeignKey(t => t.IdImage);
 
             base.OnModelCreating(modelBuilder);
 

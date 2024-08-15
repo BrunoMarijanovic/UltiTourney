@@ -26,6 +26,7 @@ builder.Services.AddDbContext<UltiTourneyDbContext>(
 builder.Services.AddScoped<ICityRepository, SQLCityRepository>();
 builder.Services.AddScoped<ICountryRepository, SQLCountryRepository>();
 builder.Services.AddScoped<IImageRepository, LocalImageRepository>();
+builder.Services.AddScoped<ITourneyRepository, SQLTourneyRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 

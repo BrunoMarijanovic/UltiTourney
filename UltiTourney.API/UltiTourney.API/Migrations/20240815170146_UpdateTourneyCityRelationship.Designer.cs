@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UltiTourney.API.Data;
 
@@ -11,9 +12,11 @@ using UltiTourney.API.Data;
 namespace UltiTourney.API.Migrations
 {
     [DbContext(typeof(UltiTourneyDbContext))]
-    partial class UltiTourneyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240815170146_UpdateTourneyCityRelationship")]
+    partial class UpdateTourneyCityRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -319,6 +322,9 @@ namespace UltiTourney.API.Migrations
                     b.Property<Guid?>("IdImage")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -333,7 +339,7 @@ namespace UltiTourney.API.Migrations
 
                     b.HasIndex("IdCity");
 
-                    b.HasIndex("IdImage");
+                    b.HasIndex("ImageId");
 
                     b.ToTable("Tourneys");
                 });
@@ -359,7 +365,9 @@ namespace UltiTourney.API.Migrations
 
                     b.HasOne("UltiTourney.API.Models.Domain.Image", "Image")
                         .WithMany()
-                        .HasForeignKey("IdImage");
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("City");
 

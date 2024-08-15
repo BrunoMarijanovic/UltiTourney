@@ -1,19 +1,19 @@
-﻿namespace UltiTourney.API.Models.Domain
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace UltiTourney.API.Models.DTO.Tourney
 {
-    public class Tourney
+    public class TourneyUploadRequestDto
     {
-        public Guid Id { get; set; }
+        [Required]
         public Guid IdCity { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
         public Guid? IdImage { get; set; }
         public DateOnly? StartDate { get; set; }
         public DateOnly? EndDate { get; set; }
         public string? UrlGoogleMaps { get; set; }
         public string? Description { get; set; }
-        public bool Deleted { get; set; }
-
-        // Navigation properties
-        public City City { get; set; }
-        public Image Image { get; set; }
     }
 }
