@@ -28,7 +28,10 @@ namespace UltiTourney.API.Repositories
             string? sortBy = null, DateOnly? startDate = null, DateOnly? endDate = null,
             bool isAscending = true, int pageNumber = 1, int pageSize = 10)
         {
-            IQueryable<Tourney> tourneys = dbContext.Tourneys.AsQueryable();
+            IQueryable<Tourney> tourneys = dbContext.Tourneys
+                .Include(x => x.City)
+                .Include(x => x.Image)
+                .AsQueryable();
 
             // Filtering
             if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
@@ -71,6 +74,14 @@ namespace UltiTourney.API.Repositories
             int skipResults = (pageNumber - 1) * pageSize;
 
             return await tourneys.Skip(skipResults).Take(pageSize).ToListAsync();
+        }
+
+        public async Task<Tourney?> GetByIdAsync(Guid id)
+        {
+            return await dbContext.Tourneys
+                .Include(x => x.City)
+                .Include(x => x.Image)
+                .FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         /// <summary>

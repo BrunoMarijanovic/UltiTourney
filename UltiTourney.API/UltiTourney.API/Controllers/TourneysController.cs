@@ -46,6 +46,18 @@ namespace UltiTourney.API.Controllers
             return Ok(mapper.Map<List<TourneyDto>>(tourneys));
         }
 
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id)
+        {
+            Tourney? tourney = await tourneyRepository.GetByIdAsync(id);
+
+            if (tourney == default)
+                return NotFound();
+
+            return Ok(mapper.Map<TourneyDto>(tourney));
+        }
+
         /// <summary>
         /// POST: /api/Tourneys
         /// </summary>

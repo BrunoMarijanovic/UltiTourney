@@ -2,6 +2,7 @@
 using UltiTourney.API.Models.Domain;
 using UltiTourney.API.Models.DTO.City;
 using UltiTourney.API.Models.DTO.Country;
+using UltiTourney.API.Models.DTO.Image;
 using UltiTourney.API.Models.DTO.Tourney;
 
 namespace UltiTourney.API.Mappings
@@ -10,6 +11,9 @@ namespace UltiTourney.API.Mappings
     {
         public AutoMapperProfiles()
         {
+            // Image mapping
+            CreateMap<Image, ImageDto>().ReverseMap();
+
             // City mapping
             CreateMap<City, CityDto>().ReverseMap();
 
