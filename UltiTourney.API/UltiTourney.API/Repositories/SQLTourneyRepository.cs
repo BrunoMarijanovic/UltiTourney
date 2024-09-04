@@ -76,6 +76,11 @@ namespace UltiTourney.API.Repositories
             return await tourneys.Skip(skipResults).Take(pageSize).ToListAsync();
         }
 
+        /// <summary>
+        /// Get the toruney by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<Tourney?> GetByIdAsync(Guid id)
         {
             return await dbContext.Tourneys
