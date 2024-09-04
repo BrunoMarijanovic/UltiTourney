@@ -45,7 +45,7 @@ namespace UltiTourney.API.Controllers
             // Map Domain Model to DTO
             return Ok(mapper.Map<List<TourneyDto>>(tourneys));
         }
-
+        
         /// <summary>
         /// GET: /api/Tourneys?id
         /// Get a Tourney by Id.
@@ -82,6 +82,13 @@ namespace UltiTourney.API.Controllers
             return Ok(mapper.Map<TourneyDto>(touruney));
         }
 
+        /// <summary>
+        /// PUT: /api/Tourneys
+        /// Modify tourney data
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="updateTourneyDto"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("{id:Guid}")]
         public async Task<IActionResult> ModifyTourney([FromRoute] Guid id, [FromBody] UpdateTourneyDto updateTourneyDto)
