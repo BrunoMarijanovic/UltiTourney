@@ -23,6 +23,7 @@ namespace UltiTourney.API.Mappings
             // Tourneys
             CreateMap<TourneyUploadRequestDto, Tourney>().ReverseMap();
             CreateMap<Tourney, TourneyDto>().ReverseMap();
+            CreateMap<Tourney, UpdateTourneyDto>().ReverseMap();
         }
     }
 }

@@ -90,6 +90,33 @@ namespace UltiTourney.API.Repositories
         }
 
         /// <summary>
+        /// Update the tourney information
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="tourney"></param>
+        /// <returns></returns>
+        public async Task<Tourney?> ModifyByIdAsync(Guid id, Tourney tourney)
+        {
+            Tourney? currentTourney = await dbContext.Tourneys
+                .FirstOrDefaultAsync(x => x.Id.Equals(id));
+
+            if (currentTourney == default)
+                return default;
+
+            currentTourney.IdCity = tourney.IdCity;
+            currentTourney.Name = tourney.Name;
+            currentTourney.IdImage = tourney.IdImage;
+            currentTourney.StartDate = tourney.StartDate;
+            currentTourney.EndDate = tourney.EndDate;
+            currentTourney.UrlGoogleMaps = tourney.UrlGoogleMaps;
+            currentTourney.Description = tourney.Description;
+
+            await dbContext.SaveChangesAsync();
+
+            return currentTourney;
+        }
+
+        /// <summary>
         /// Insert in DB a new tourney
         /// </summary>
         /// <param name="tourney"></param>

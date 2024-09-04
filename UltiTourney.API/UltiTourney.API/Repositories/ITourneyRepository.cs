@@ -11,5 +11,7 @@ namespace UltiTourney.API.Repositories
             bool isAscending = true, int pageNumber = 1, int pageSize = 10);
 
         Task<Tourney?> GetByIdAsync(Guid id);
+        
+        Task<Tourney?> ModifyByIdAsync(Guid id, Tourney tourney);
     }
 }

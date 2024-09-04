@@ -81,5 +81,20 @@ namespace UltiTourney.API.Controllers
             // Map Domain Model to DTO
             return Ok(mapper.Map<TourneyDto>(touruney));
         }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> ModifyTourney([FromRoute] Guid id, [FromBody] UpdateTourneyDto updateTourneyDto)
+        {
+            Tourney? tourney = mapper.Map<Tourney>(updateTourneyDto);
+
+            tourney = await tourneyRepository.ModifyByIdAsync(id, tourney);
+
+            if (tourney == default)
+                return NotFound();
+
+            return Ok(mapper.Map<TourneyDto>(tourney));
+        }
+
     }
 }
