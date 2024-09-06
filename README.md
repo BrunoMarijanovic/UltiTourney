@@ -3,13 +3,13 @@
  ## API  
  ### Get Started  
  With Visual Studio 2022 install the following extensions (Dependencies > Admin NuGet):  
- 1. Microsoft.AspNetCore.Authentication.JwtBearer v8.0.7
- 2. Microsoft.IdentityModel.Tokens v8.0.1
+ 1. Microsoft.AspNetCore.Authentication.JwtBearer v8.0.8
+ 2. Microsoft.IdentityModel.Tokens v8.0.2
  3. System.IdentityModel.Tokens.Jwt v8.0.1
- 4. Microsoft.AspNetCore.Identity.EntityFrameworkCore v8.0.7
- 5. Swashbuckle.AspNetCore v6.7.0
- 6. Microsoft.EntityFrameworkCore.SqlServer v8.0.7
- 7. Microsoft.EntityFrameworkCore.Tools v8.0.7
+ 4. Microsoft.AspNetCore.Identity.EntityFrameworkCore v8.0.8
+ 5. Swashbuckle.AspNetCore v6.7.3
+ 6. Microsoft.EntityFrameworkCore.SqlServer v8.0.8
+ 7. Microsoft.EntityFrameworkCore.Tools v8.0.8
  8. AutoMapper v13.0.1
 
  ### Create Domain Model  
