@@ -5,7 +5,7 @@ namespace UltiTourney.API.Data
 {
     public class UltiTourneyDbContext: DbContext
     {
-        public UltiTourneyDbContext(DbContextOptions dbContextOptions): base(dbContextOptions)
+        public UltiTourneyDbContext(DbContextOptions<UltiTourneyDbContext> dbContextOptions): base(dbContextOptions)
         {
             
         }
