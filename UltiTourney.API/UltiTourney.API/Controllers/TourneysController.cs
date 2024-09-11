@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UltiTourney.API.Models.Domain;
-using UltiTourney.API.Models.DTO.City;
-using UltiTourney.API.Models.DTO.Image;
 using UltiTourney.API.Models.DTO.Tourney;
 using UltiTourney.API.Repositories;
 
@@ -35,6 +33,7 @@ namespace UltiTourney.API.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> GetAll(string? filterOn = null, string? filterQuery = null,
             string? sortBy = null, DateOnly? startDate = null, DateOnly? endDate = null,
             bool isAscending = true, int pageNumber = 1, int pageSize = 10)
@@ -66,10 +65,12 @@ namespace UltiTourney.API.Controllers
 
         /// <summary>
         /// POST: /api/Tourneys
+        /// Creates a new tourney
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> Upload([FromBody] TourneyUploadRequestDto request)
         {
             // Map Request Model to Domain
@@ -91,6 +92,8 @@ namespace UltiTourney.API.Controllers
         /// <returns></returns>
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> ModifyTourney([FromRoute] Guid id, [FromBody] UpdateTourneyDto updateTourneyDto)
         {
             Tourney? tourney = mapper.Map<Tourney>(updateTourneyDto);
