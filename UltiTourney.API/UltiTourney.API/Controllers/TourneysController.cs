@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using UltiTourney.API.Models.Domain;
 using UltiTourney.API.Models.DTO.Tourney;
 using UltiTourney.API.Repositories;
@@ -73,8 +75,30 @@ namespace UltiTourney.API.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> Upload([FromBody] TourneyUploadRequestDto request)
         {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            //if (string.IsNullOrEmpty(token))
+            //{
+            //    return Unauthorized("Token not found.");
+            //}
+
+            //var handler = new JwtSecurityTokenHandler();
+            //var jwtToken = handler.ReadJwtToken(token);
+
+            //var userIdClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "userId");
+
+            //if (userIdClaim == null)
+            //{
+            //    return Unauthorized("User ID not found in token.");
+            //}
+
+            //var userId = userIdClaim.Value;
+
+            //AuthController.GetUserIdWithToken("abc");
+
             // Map Request Model to Domain
             Tourney touruney = mapper.Map<Tourney>(request);
+            //touruney.IdUser = userId;
 
             // Create the row in the DB
             touruney = await tourneyRepository.UploadAsync(touruney);

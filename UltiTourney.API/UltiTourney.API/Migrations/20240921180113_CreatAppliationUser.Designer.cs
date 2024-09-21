@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UltiTourney.API.Data;
 
@@ -11,9 +12,11 @@ using UltiTourney.API.Data;
 namespace UltiTourney.API.Migrations
 {
     [DbContext(typeof(UltiTourneyDbContext))]
-    partial class UltiTourneyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240921180113_CreatAppliationUser")]
+    partial class CreatAppliationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

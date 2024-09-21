@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
+using UltiTourney.API.Models.Domain;
 using UltiTourney.API.Models.DTO.Auth;
 using UltiTourney.API.Repositories;
 
@@ -11,10 +12,10 @@ namespace UltiTourney.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly ITokenRepository tokenRepository;
 
-        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
+        public AuthController(UserManager<ApplicationUser> userManager, ITokenRepository tokenRepository)
         {
             this.userManager = userManager;
             this.tokenRepository = tokenRepository;
@@ -29,7 +30,7 @@ namespace UltiTourney.API.Controllers
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
-            IdentityUser identityUser = new IdentityUser
+            ApplicationUser identityUser = new ApplicationUser
             {
                 UserName = registerRequestDto.Username,
                 Email = registerRequestDto.Username,
@@ -67,7 +68,7 @@ namespace UltiTourney.API.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
-            IdentityUser? user = await userManager.FindByEmailAsync(loginRequestDto.Username);
+            ApplicationUser? user = await userManager.FindByEmailAsync(loginRequestDto.Username);
 
             if (user != default)
             {

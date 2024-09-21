@@ -8,6 +8,7 @@ using UltiTourney.API.Data;
 using UltiTourney.API.Mappings;
 using UltiTourney.API.Repositories;
 using Microsoft.OpenApi.Models;
+using UltiTourney.API.Models.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,7 +62,7 @@ builder.Services.AddDbContext<UltiTourneyDbContext>(
     );
 
 // DB Context with Auth method
-builder.Services.AddDbContext<UltiTourneyAuthDbContext>(options =>
+builder.Services.AddDbContext<UltiTourneyDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("UltiTourneyConnectionString"))
     );
@@ -74,10 +75,10 @@ builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
-builder.Services.AddIdentityCore<IdentityUser>()
+builder.Services.AddIdentityCore<ApplicationUser>()
     .AddRoles<IdentityRole>()
-    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("UltiTourney")
-    .AddEntityFrameworkStores<UltiTourneyAuthDbContext>()
+    .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("UltiTourney")
+    .AddEntityFrameworkStores<UltiTourneyDbContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.Configure<IdentityOptions>(options =>
