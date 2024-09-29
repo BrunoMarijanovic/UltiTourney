@@ -72,6 +72,8 @@ builder.Services.AddScoped<ICountryRepository, SQLCountryRepository>();
 builder.Services.AddScoped<IImageRepository, LocalImageRepository>();
 builder.Services.AddScoped<ITourneyRepository, SQLTourneyRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddScoped<IUserTourneyRepository, SQLUserTourneyRepository>();
+builder.Services.AddScoped<IUserRepository, SQLUserRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 

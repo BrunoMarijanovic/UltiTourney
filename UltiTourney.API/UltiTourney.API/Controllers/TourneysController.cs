@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using UltiTourney.API.Models.Domain;
 using UltiTourney.API.Models.DTO.Tourney;
@@ -15,11 +14,16 @@ namespace UltiTourney.API.Controllers
     {
         private readonly IMapper mapper;
         private readonly ITourneyRepository tourneyRepository;
+        private readonly IUserRepository userRepository;
+        private readonly IUserTourneyRepository userTourneyRepository;
 
-        public TourneysController(IMapper mapper, ITourneyRepository tourneyRepository)
+        public TourneysController(IMapper mapper, ITourneyRepository tourneyRepository, 
+            IUserRepository userRepository, IUserTourneyRepository userTourneyRepository)
         {
             this.mapper = mapper;
             this.tourneyRepository = tourneyRepository;
+            this.userRepository = userRepository;
+            this.userTourneyRepository = userTourneyRepository;
         }
 
         /// <summary>
@@ -75,36 +79,37 @@ namespace UltiTourney.API.Controllers
         [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> Upload([FromBody] TourneyUploadRequestDto request)
         {
-            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            // Retrieve the user's email from the claims
+            string? userEmail = HttpContext.User.FindFirstValue(ClaimTypes.Email);
 
-            //if (string.IsNullOrEmpty(token))
-            //{
-            //    return Unauthorized("Token not found.");
-            //}
+            if (userEmail == null)
+                return BadRequest("User email not found");
 
-            //var handler = new JwtSecurityTokenHandler();
-            //var jwtToken = handler.ReadJwtToken(token);
+            // Retrieve the user ID from the database based on the email
+            var user = await userRepository.GetUserByEmailAsync(userEmail);
 
-            //var userIdClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "userId");
-
-            //if (userIdClaim == null)
-            //{
-            //    return Unauthorized("User ID not found in token.");
-            //}
-
-            //var userId = userIdClaim.Value;
-
-            //AuthController.GetUserIdWithToken("abc");
+            if (user == null)
+                return BadRequest("User not found");
 
             // Map Request Model to Domain
-            Tourney touruney = mapper.Map<Tourney>(request);
-            //touruney.IdUser = userId;
+            Tourney tourney = mapper.Map<Tourney>(request);
 
             // Create the row in the DB
-            touruney = await tourneyRepository.UploadAsync(touruney);
+            tourney = await tourneyRepository.UploadAsync(tourney);
+
+            // Insert into UserTourneys table to create DB relationship
+            var userTourney = new UserTourney
+            {
+                User = user,
+                UserId = user.Id,
+                Tourney = tourney,
+                TourneyId = tourney.Id
+            };
+
+            await userTourneyRepository.InsertAsync(userTourney);
 
             // Map Domain Model to DTO
-            return Ok(mapper.Map<TourneyDto>(touruney));
+            return Ok(mapper.Map<TourneyDto>(tourney));
         }
 
         /// <summary>

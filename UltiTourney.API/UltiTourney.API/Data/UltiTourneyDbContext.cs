@@ -16,6 +16,7 @@ namespace UltiTourney.API.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Tourney> Tourneys { get; set; }
+        public DbSet<UserTourney> UserTourneys { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
